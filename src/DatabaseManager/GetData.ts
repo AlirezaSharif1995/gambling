@@ -34,7 +34,6 @@ export async function loginUser(playerToken:string) {
     }
 }
 
-
 export async function getData(type: string, playerToken: string) {
     try {
         const query = `SELECT * FROM players WHERE playerToken = ?`;

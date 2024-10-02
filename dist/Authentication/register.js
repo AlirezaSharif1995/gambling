@@ -40,7 +40,7 @@ router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awa
             birthDate: new Date(birthDate) || user.birthDate,
             avatar: avatar || user.avatar,
         };
-        const updateResult = yield (0, DatabaseManager_1.updateData)(playerToken, updatedUser);
+        const updateResult = yield (0, DatabaseManager_1.completeProfile)(playerToken, updatedUser);
         if (updateResult.success) {
             return res.status(200).json({ message: 'Profile completed successfully', user: updatedUser });
         }

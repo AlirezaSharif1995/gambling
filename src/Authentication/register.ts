@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { getData, updateData } from '../DatabaseManager';
+import { getData, completeProfile } from '../DatabaseManager';
 import { User } from './user';
 import { jwt } from '../utils';
 
@@ -38,7 +38,7 @@ router.post('/completeProfile', jwt.authenticateJWT, async (req: Request, res: R
       avatar: avatar || user.avatar,
     };
 
-    const updateResult = await updateData(playerToken, updatedUser);
+    const updateResult = await completeProfile(playerToken, updatedUser);
 
     if (updateResult.success) {
       return res.status(200).json({ message: 'Profile completed successfully', user: updatedUser });

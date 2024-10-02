@@ -29,14 +29,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const Auth = __importStar(require("./Authentication")); // Import from index.ts
+const utils_1 = require("./utils");
+const FriendsManager = __importStar(require("./FriendsManager"));
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 app.use('/register', Auth.registerRoutes);
 app.use('/login', Auth.loginRoutes);
-app.get('/', (req, res) => {
-    res.send('Test socket is worked!');
-});
+app.use('/friendsManager', utils_1.jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
