@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const DatabaseManager_1 = require("../DatabaseManager");
 const user_1 = require("./user");
+const utils_1 = require("../utils");
 const router = (0, express_1.Router)();
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -24,7 +25,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ message: 'Error registering player', error: error });
     }
 }));
-router.post('/completeProfile', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { playerToken, username, birthDate, avatar } = req.body;
         if (!username || !birthDate || !avatar || !playerToken) {

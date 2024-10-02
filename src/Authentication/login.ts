@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { loginUser, getData } from '../DatabaseManager';
+import { loginUser } from '../DatabaseManager';
 
 const router = Router();
 

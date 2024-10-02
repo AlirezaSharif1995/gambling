@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { getData, updateData } from '../DatabaseManager';
 import { User } from './user';
+import { jwt } from '../utils';
 
 const router = Router();
 
@@ -17,7 +18,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/completeProfile', async (req: Request, res: Response) => {
+router.post('/completeProfile', jwt.authenticateJWT, async (req: Request, res: Response) => {
   try {
     const { playerToken, username, birthDate, avatar } = req.body;
 
