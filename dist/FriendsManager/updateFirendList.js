@@ -71,4 +71,32 @@ router.post('/removeFreind', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     res.status(200).json({ message: 'Friend removed successfully' });
 }));
+router.post('/blockUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { playerToken, friendToken } = req.body;
+    if (!playerToken || !friendToken) {
+        return res.status(400).json({ message: 'Missing required fields: playerToken, friendToken' });
+    }
+    try {
+        const result = yield (0, DatabaseManager_1.blockUser)(playerToken, friendToken);
+        res.status(result.status || 200).json(result);
+    }
+    catch (error) {
+        console.error('Error blocking user:', error);
+        res.status(500).json({ message: 'Error blocking user', error: error });
+    }
+}));
+router.post('/unblockUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { playerToken, friendToken } = req.body;
+    if (!playerToken || !friendToken) {
+        return res.status(400).json({ message: 'Missing required fields: playerToken, friendToken' });
+    }
+    try {
+        const result = yield (0, DatabaseManager_1.unblockUser)(playerToken, friendToken);
+        res.status(result.status || 200).json(result);
+    }
+    catch (error) {
+        console.error('Error unblocking user:', error);
+        res.status(500).json({ message: 'Error unblocking user', error: error });
+    }
+}));
 exports.default = router;

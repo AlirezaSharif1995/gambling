@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { addFriendRequest, acceptFriendRequest, rejectFriendRequest, removeFriend } from '../DatabaseManager';
+import { addFriendRequest, acceptFriendRequest, rejectFriendRequest, removeFriend, blockUser, unblockUser } from '../DatabaseManager';
 const router = Router();
 
 interface FriendRequestResult {
@@ -77,6 +77,38 @@ router.post('/removeFreind', async (req: Request, res: Response) => {
     }
 
     res.status(200).json({ message: 'Friend removed successfully' });
+});
+
+router.post('/blockUser', async (req: Request, res: Response) => {
+    const { playerToken, friendToken } = req.body;
+
+    if (!playerToken || !friendToken) {
+        return res.status(400).json({ message: 'Missing required fields: playerToken, friendToken' });
+    }
+
+    try {
+        const result = await blockUser(playerToken, friendToken);
+        res.status(result.status || 200).json(result);
+    } catch (error) {
+        console.error('Error blocking user:', error);
+        res.status(500).json({ message: 'Error blocking user', error: error });
+    }
+});
+
+router.post('/unblockUser', async (req: Request, res: Response) => {
+    const { playerToken, friendToken } = req.body;
+
+    if (!playerToken || !friendToken) {
+        return res.status(400).json({ message: 'Missing required fields: playerToken, friendToken' });
+    }
+
+    try {
+        const result = await unblockUser(playerToken, friendToken);
+        res.status(result.status || 200).json(result);
+    } catch (error) {
+        console.error('Error unblocking user:', error);
+        res.status(500).json({ message: 'Error unblocking user', error: error });
+    }
 });
 
 export default router; 

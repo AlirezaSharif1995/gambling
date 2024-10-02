@@ -208,3 +208,55 @@ export async function removeFriend(playerToken: string, friendToken: string): Pr
       return { success: false, status: 500, message: 'Error removing friend' };
   }
 }
+
+export async function blockUser(playerToken: string, blockToken: string): Promise<FriendRequestResult> {
+  try {
+      const [user]: [RowDataPacket[], any] = await pool.query('SELECT blockList FROM players WHERE playerToken = ?', [playerToken]);
+
+      if (user.length === 0) {
+          return { success: false, status: 404, message: 'User not found' };
+      }
+
+      let blockedUsers: string[] = JSON.parse(user[0].blockedUsers || '[]');
+
+      if (blockedUsers.includes(blockToken)) {
+          return { success: false, status: 400, message: 'User already blocked' };
+      }
+
+      blockedUsers.push(blockToken);
+
+      await pool.query('UPDATE players SET blockList = ? WHERE playerToken = ?', [JSON.stringify(blockedUsers), playerToken]);
+
+      return { success: true, message: 'User blocked successfully' };
+  } catch (error) {
+      console.error('Error blocking user:', error);
+      return { success: false, status: 500, message: 'Error blocking user' };
+  }
+}
+
+export async function unblockUser(playerToken: string, unblockToken: string): Promise<FriendRequestResult> {
+  try {
+      const [user]: [RowDataPacket[], any] = await pool.query('SELECT blockList FROM players WHERE playerToken = ?', [playerToken]);
+
+      if (user.length === 0) {
+          return { success: false, status: 404, message: 'User not found' };
+      }
+
+      let blockedUsers: string[] = JSON.parse(user[0].blockedUsers || '[]');
+
+      const blockIndex = blockedUsers.indexOf(unblockToken);
+      if (blockIndex === -1) {
+          return { success: false, status: 400, message: 'User is not blocked' };
+      }
+
+      // Remove the user from the blockedUsers list
+      blockedUsers.splice(blockIndex, 1);
+
+      await pool.query('UPDATE players SET blockList = ? WHERE playerToken = ?', [JSON.stringify(blockedUsers), playerToken]);
+
+      return { success: true, message: 'User unblocked successfully' };
+  } catch (error) {
+      console.error('Error unblocking user:', error);
+      return { success: false, status: 500, message: 'Error unblocking user' };
+  }
+}

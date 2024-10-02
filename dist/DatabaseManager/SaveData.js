@@ -19,6 +19,8 @@ exports.addFriendRequest = addFriendRequest;
 exports.acceptFriendRequest = acceptFriendRequest;
 exports.rejectFriendRequest = rejectFriendRequest;
 exports.removeFriend = removeFriend;
+exports.blockUser = blockUser;
+exports.unblockUser = unblockUser;
 const promise_1 = __importDefault(require("mysql2/promise"));
 // Database connection setup
 const pool = promise_1.default.createPool({
@@ -194,6 +196,50 @@ function removeFriend(playerToken, friendToken) {
         catch (error) {
             console.error('Error removing friend:', error);
             return { success: false, status: 500, message: 'Error removing friend' };
+        }
+    });
+}
+function blockUser(playerToken, blockToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const [user] = yield pool.query('SELECT blockList FROM players WHERE playerToken = ?', [playerToken]);
+            if (user.length === 0) {
+                return { success: false, status: 404, message: 'User not found' };
+            }
+            let blockedUsers = JSON.parse(user[0].blockedUsers || '[]');
+            if (blockedUsers.includes(blockToken)) {
+                return { success: false, status: 400, message: 'User already blocked' };
+            }
+            blockedUsers.push(blockToken);
+            yield pool.query('UPDATE players SET blockList = ? WHERE playerToken = ?', [JSON.stringify(blockedUsers), playerToken]);
+            return { success: true, message: 'User blocked successfully' };
+        }
+        catch (error) {
+            console.error('Error blocking user:', error);
+            return { success: false, status: 500, message: 'Error blocking user' };
+        }
+    });
+}
+function unblockUser(playerToken, unblockToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const [user] = yield pool.query('SELECT blockList FROM players WHERE playerToken = ?', [playerToken]);
+            if (user.length === 0) {
+                return { success: false, status: 404, message: 'User not found' };
+            }
+            let blockedUsers = JSON.parse(user[0].blockedUsers || '[]');
+            const blockIndex = blockedUsers.indexOf(unblockToken);
+            if (blockIndex === -1) {
+                return { success: false, status: 400, message: 'User is not blocked' };
+            }
+            // Remove the user from the blockedUsers list
+            blockedUsers.splice(blockIndex, 1);
+            yield pool.query('UPDATE players SET blockList = ? WHERE playerToken = ?', [JSON.stringify(blockedUsers), playerToken]);
+            return { success: true, message: 'User unblocked successfully' };
+        }
+        catch (error) {
+            console.error('Error unblocking user:', error);
+            return { success: false, status: 500, message: 'Error unblocking user' };
         }
     });
 }
