@@ -13,9 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = loginUser;
+exports.getData = getData;
 const promise_1 = __importDefault(require("mysql2/promise"));
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const jwt_1 = require("../utils/jwt"); // Assuming you have a generateToken utility function
+const jwt_1 = require("../utils/jwt");
+// Assuming you have a generateToken utility function
 // Database connection setup
 const pool = promise_1.default.createPool({
     host: 'localhost',
@@ -23,21 +24,16 @@ const pool = promise_1.default.createPool({
     password: 'Alireza1995!',
     database: 'game_db',
 });
-function loginUser(email, password) {
+function loginUser(playerToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Fetch user from the database by email
-            const [rows] = yield pool.query('SELECT * FROM players WHERE email = ?', [email]);
+            const [rows] = yield pool.query('SELECT * FROM players WHERE playerToken = ?', [playerToken]);
             // If no user is found
             if (rows.length === 0) {
                 return { success: false, message: 'User not found' };
             }
             const user = rows[0]; // Access the first row (the user)
-            // Compare the password with the hashed password stored in the database
-            const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
-            if (!isPasswordValid) {
-                return { success: false, message: 'Invalid password' };
-            }
             // Generate a JWT token
             const token = (0, jwt_1.generateToken)(user.id); // Assuming user.id is the identifier
             return { success: true, message: 'Login successful', token };
@@ -45,6 +41,24 @@ function loginUser(email, password) {
         catch (error) {
             console.error('Error logging in user:', error);
             return { success: false, message: 'Error logging in user: ' + error };
+        }
+    });
+}
+function getData(type, playerToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const query = `SELECT * FROM players WHERE playerToken = ?`;
+            const [rows] = yield pool.query(query, [playerToken]);
+            if (rows.length > 0 && rows[0].hasOwnProperty(type)) {
+                return rows[0][type];
+            }
+            else {
+                return { success: false, message: `Property '${type}' not found in the result.` };
+            }
+        }
+        catch (error) {
+            console.error('Error get data:', error);
+            return { success: false, message: 'Error get data: ' + error };
         }
     });
 }

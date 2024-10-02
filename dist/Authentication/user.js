@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminUser = exports.User = void 0;
 const DatabaseManager_1 = require("../DatabaseManager");
 class User {
-    constructor(username, email, password) {
+    constructor() {
         this.playerToken = generateToken();
+        this.username = "";
+        this.email = "";
         this.friends = [];
         this.avatar = 0;
         this.region = "global";
         this.role = 1;
-        this.username = username;
-        this.email = email;
-        this.password = password;
+        this.birthDate = new Date('2000-01-01');
     }
     addFriend(playerToken) {
         this.friends.push(playerToken);
@@ -23,7 +23,7 @@ class User {
 exports.User = User;
 class AdminUser extends User {
     constructor(adminPermissionLevel, username, email, password) {
-        super(username, email, password);
+        super();
         this.adminPermissionLevel = adminPermissionLevel;
     }
 }

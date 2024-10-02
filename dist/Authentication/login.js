@@ -14,12 +14,11 @@ const DatabaseManager_1 = require("../DatabaseManager");
 const router = (0, express_1.Router)();
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ message: 'Missing required fields: email, password' });
+        const { playerToken } = req.body;
+        if (!playerToken) {
+            return res.status(400).json({ message: 'Missing required fields: playerToken' });
         }
-        const result = yield (0, DatabaseManager_1.loginUser)(email, password);
-        console.log(result);
+        const result = yield (0, DatabaseManager_1.loginUser)(playerToken);
         res.status(201).json({ result });
     }
     catch (error) {

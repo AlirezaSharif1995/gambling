@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = registerUser;
+exports.updateData = updateData;
 const promise_1 = __importDefault(require("mysql2/promise"));
 // Database connection setup
 const pool = promise_1.default.createPool({
@@ -26,20 +27,37 @@ function registerUser(User) {
         try {
             const connection = yield pool.getConnection();
             const query = `
-          INSERT INTO players (playerToken, username, email, password) 
-          VALUES (?, ?, ?, ?)
+          INSERT INTO players (playerToken) 
+          VALUES (?)
         `;
             yield connection.execute(query, [
-                User.playerToken,
-                User.username,
-                User.email,
-                User.password,
+                User.playerToken
             ]);
             console.log(`Player ${User.username} saved to the database.`);
             connection.release();
         }
         catch (error) {
             console.error('Error saving player:', error);
+        }
+    });
+}
+function updateData(playerToken, updatedUser) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ? WHERE playerToken = ?`;
+            // Casting result to ResultSetHeader to access affectedRows
+            const [result] = yield pool.query(query, [
+                updatedUser.username,
+                updatedUser.birthDate,
+                updatedUser.avatar,
+                playerToken
+            ]);
+            // Check if rows were affected
+            return { success: result.affectedRows > 0 };
+        }
+        catch (error) {
+            console.error('Error updating user data:', error);
+            return { success: false };
         }
     });
 }

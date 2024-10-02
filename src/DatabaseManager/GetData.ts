@@ -1,6 +1,8 @@
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
-import { generateToken } from '../utils/jwt'; // Assuming you have a generateToken utility function
+import { generateToken } from '../utils/jwt';
+import { RowDataPacket } from 'mysql2'; // Import the correct type
+ // Assuming you have a generateToken utility function
 
 // Database connection setup
 const pool = mysql.createPool({
@@ -10,10 +12,10 @@ const pool = mysql.createPool({
     database: 'game_db',
 });
 
-export async function loginUser(email: string, password: string) {
+export async function loginUser(playerToken:string) {
     try {
         // Fetch user from the database by email
-        const [rows] = await pool.query('SELECT * FROM players WHERE email = ?', [email]);
+        const [rows] = await pool.query('SELECT * FROM players WHERE playerToken = ?', [playerToken]);
 
         // If no user is found
         if ((rows as any[]).length === 0) {
@@ -21,13 +23,6 @@ export async function loginUser(email: string, password: string) {
         }
 
         const user = (rows as any[])[0]; // Access the first row (the user)
-
-        // Compare the password with the hashed password stored in the database
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-
-        if (!isPasswordValid) {
-            return { success: false, message: 'Invalid password' };
-        }
 
         // Generate a JWT token
         const token = generateToken(user.id); // Assuming user.id is the identifier
@@ -38,3 +33,22 @@ export async function loginUser(email: string, password: string) {
         return { success: false, message: 'Error logging in user: ' + error };
     }
 }
+
+
+export async function getData(type: string, playerToken: string) {
+    try {
+        const query = `SELECT * FROM players WHERE playerToken = ?`;
+        const [rows] = await pool.query<RowDataPacket[]>(query, [playerToken]);
+
+        if (rows.length > 0 && rows[0].hasOwnProperty(type)) {
+            return rows[0][type];
+        } else {
+            return { success: false, message: `Property '${type}' not found in the result.` };
+        }
+
+    } catch (error) {
+        console.error('Error get data:', error);
+        return { success: false, message: 'Error get data: ' + error };
+    }
+}
+

@@ -1,2 +1,2 @@
-export { registerUser } from './SaveData';
-export { loginUser } from './GetData';
+export { registerUser, updateData } from './SaveData';
+export { loginUser, getData } from './GetData';
