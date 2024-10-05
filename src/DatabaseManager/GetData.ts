@@ -1,10 +1,7 @@
 import mysql from 'mysql2/promise';
-import bcrypt from 'bcryptjs';
 import { generateToken } from '../utils/jwt';
-import { RowDataPacket } from 'mysql2'; // Import the correct type
- // Assuming you have a generateToken utility function
+import { RowDataPacket } from 'mysql2'; 
 
-// Database connection setup
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
@@ -25,7 +22,7 @@ export async function loginUser(playerToken:string) {
         const user = (rows as any[])[0]; // Access the first row (the user)
 
         // Generate a JWT token
-        const token = generateToken(user.id); // Assuming user.id is the identifier
+        const token = generateToken(playerToken); // Assuming user.id is the identifier
 
         return { success: true, message: 'Login successful', token };
     } catch (error) {

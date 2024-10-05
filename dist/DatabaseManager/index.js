@@ -15,7 +15,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getData = exports.loginUser = void 0;
-__exportStar(require("./SaveData"), exports);
+__exportStar(require("./SaveUserData"), exports);
+__exportStar(require("./saveFriendsData"), exports);
+__exportStar(require("./saveStatsData"), exports);
+__exportStar(require("./saveGroupData"), exports);
 var GetData_1 = require("./GetData");
 Object.defineProperty(exports, "loginUser", { enumerable: true, get: function () { return GetData_1.loginUser; } });
 Object.defineProperty(exports, "getData", { enumerable: true, get: function () { return GetData_1.getData; } });

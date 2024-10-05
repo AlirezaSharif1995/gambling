@@ -12,16 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerUser = registerUser;
-exports.completeProfile = completeProfile;
-exports.updateData = updateData;
 exports.addFriendRequest = addFriendRequest;
 exports.acceptFriendRequest = acceptFriendRequest;
 exports.rejectFriendRequest = rejectFriendRequest;
 exports.removeFriend = removeFriend;
 exports.blockUser = blockUser;
 exports.unblockUser = unblockUser;
-exports.updateStats = updateStats;
 const promise_1 = __importDefault(require("mysql2/promise"));
 // Database connection setup
 const pool = promise_1.default.createPool({
@@ -30,64 +26,6 @@ const pool = promise_1.default.createPool({
     password: 'Alireza1995!',
     database: 'game_db',
 });
-function registerUser(User) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const connection = yield pool.getConnection();
-            const query = `
-          INSERT INTO players (playerToken) 
-          VALUES (?)
-        `;
-            yield connection.execute(query, [
-                User.playerToken
-            ]);
-            console.log(`Player ${User.username} saved to the database.`);
-            connection.release();
-        }
-        catch (error) {
-            console.error('Error saving player:', error);
-        }
-    });
-}
-function completeProfile(playerToken, updatedUser) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ? WHERE playerToken = ?`;
-            // Casting result to ResultSetHeader to access affectedRows
-            const [result] = yield pool.query(query, [
-                updatedUser.username,
-                updatedUser.birthDate,
-                updatedUser.avatar,
-                playerToken
-            ]);
-            // Check if rows were affected
-            return { success: result.affectedRows > 0 };
-        }
-        catch (error) {
-            console.error('Error updating user data:', error);
-            return { success: false };
-        }
-    });
-}
-function updateData(playerToken, type, data) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            // Fetch user from the database by email
-            const [rows] = yield pool.query('SELECT * FROM players WHERE playerToken = ?', [playerToken]);
-            // If no user is found
-            if (rows.length === 0) {
-                return { success: false, message: 'User not found' };
-            }
-            const query = `UPDATE players SET ${type} = ? WHERE playerToken = ?`;
-            const [result] = yield pool.query(query, [data, playerToken]);
-            return { success: result.affectedRows > 0 };
-        }
-        catch (error) {
-            console.error('Error updating user data:', error);
-            return { success: false };
-        }
-    });
-}
 function addFriendRequest(playerToken, friendToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -133,7 +71,9 @@ function acceptFriendRequest(playerToken, friendToken) {
                 return { success: false, status: 404, message: 'User not found' };
             }
             let friendRequests = JSON.parse(user[0].friendsRequests || '[]');
-            let friends = JSON.parse(user[0].friendsList || '[]'); // Ensure we access the correct column name
+            let friends = Array.isArray(JSON.parse(user[0].friendsList))
+                ? JSON.parse(user[0].friendsList)
+                : [];
             const requestIndex = friendRequests.indexOf(friendToken);
             if (requestIndex === -1) {
                 return { success: false, status: 400, message: 'Friend request not found' };
@@ -242,9 +182,5 @@ function unblockUser(playerToken, unblockToken) {
             console.error('Error unblocking user:', error);
             return { success: false, status: 500, message: 'Error unblocking user' };
         }
-    });
-}
-function updateStats(playerToken, type) {
-    return __awaiter(this, void 0, void 0, function* () {
     });
 }

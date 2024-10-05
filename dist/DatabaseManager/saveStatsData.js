@@ -12,51 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = loginUser;
-exports.getData = getData;
+exports.updateStats = updateStats;
 const promise_1 = __importDefault(require("mysql2/promise"));
-const jwt_1 = require("../utils/jwt");
 const pool = promise_1.default.createPool({
     host: 'localhost',
     user: 'root',
     password: 'Alireza1995!',
     database: 'game_db',
 });
-function loginUser(playerToken) {
+function updateStats(playerToken, type, stat) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            // Fetch user from the database by email
+            // Properly typing the query result
             const [rows] = yield pool.query('SELECT * FROM players WHERE playerToken = ?', [playerToken]);
-            // If no user is found
             if (rows.length === 0) {
                 return { success: false, message: 'User not found' };
             }
-            const user = rows[0]; // Access the first row (the user)
-            // Generate a JWT token
-            const token = (0, jwt_1.generateToken)(playerToken); // Assuming user.id is the identifier
-            return { success: true, message: 'Login successful', token };
+            // Use the correct type to access the stat
+            const currentStat = rows[0][type] || 0; // Type assertion for accessing dynamic key
+            const updatedPoint = currentStat + stat;
+            const query = `UPDATE players SET ${type} = ? WHERE playerToken = ?`;
+            const [result] = yield pool.query(query, [updatedPoint, playerToken]);
+            return { success: result.affectedRows > 0 };
         }
         catch (error) {
-            console.error('Error logging in user:', error);
-            return { success: false, message: 'Error logging in user: ' + error };
-        }
-    });
-}
-function getData(type, playerToken) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const query = `SELECT * FROM players WHERE playerToken = ?`;
-            const [rows] = yield pool.query(query, [playerToken]);
-            if (rows.length > 0 && rows[0].hasOwnProperty(type)) {
-                return rows[0][type];
-            }
-            else {
-                return { success: false, message: `Property '${type}' not found in the result.` };
-            }
-        }
-        catch (error) {
-            console.error('Error get data:', error);
-            return { success: false, message: 'Error get data: ' + error };
+            console.error('Error updating user data:', error);
+            return { success: false };
         }
     });
 }

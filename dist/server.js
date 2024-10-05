@@ -27,16 +27,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const utils_1 = require("./utils");
 const body_parser_1 = __importDefault(require("body-parser"));
 const Auth = __importStar(require("./Authentication")); // Import from index.ts
-const utils_1 = require("./utils");
 const FriendsManager = __importStar(require("./FriendsManager"));
+const Profile = __importStar(require("./ProfileManager"));
+const Group = __importStar(require("./Groups"));
 const PORT = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 app.use('/register', Auth.registerRoutes);
 app.use('/login', Auth.loginRoutes);
 app.use('/friendsManager', utils_1.jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
+app.use('/statsManager', utils_1.jwt.authenticateJWT, Profile.updateStats);
+app.use('/profileManager', utils_1.jwt.authenticateJWT, Profile.updateProfile);
+app.use('/groupManager', utils_1.jwt.authenticateJWT, Group.groupManager);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
