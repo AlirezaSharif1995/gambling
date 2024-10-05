@@ -19,6 +19,7 @@ __exportStar(require("./SaveUserData"), exports);
 __exportStar(require("./saveFriendsData"), exports);
 __exportStar(require("./saveStatsData"), exports);
 __exportStar(require("./saveGroupData"), exports);
+__exportStar(require("./savePlayerData"), exports);
 var GetData_1 = require("./GetData");
 Object.defineProperty(exports, "loginUser", { enumerable: true, get: function () { return GetData_1.loginUser; } });
 Object.defineProperty(exports, "getData", { enumerable: true, get: function () { return GetData_1.getData; } });

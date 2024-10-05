@@ -10,7 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const DatabaseManager_1 = require("../DatabaseManager");
 const router = (0, express_1.Router)();
-router.post('/updateStats', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/updateProfile', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { playerToken, type, data } = req.body;
+    if (!type || !data || !playerToken) {
+        return res.status(400).json({ message: 'Missing required fields: data, playerToken, type' });
+    }
+    try {
+        const result = (0, DatabaseManager_1.updateProfile)(playerToken, type, data);
+        res.status(200).json({ message: 'Profile updated successfully' });
+    }
+    catch (error) {
+        console.error('Error updating Profile:', error);
+        res.status(500).json({ message: 'Error updating Profile', error });
+    }
 }));
 exports.default = router;
