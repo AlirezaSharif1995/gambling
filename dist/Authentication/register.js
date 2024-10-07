@@ -18,22 +18,22 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const player = new user_1.User();
         yield player.registerUser();
-        res.status(201).json({ success: true, message: 'Player registered successfully', playerToken: player.playerToken });
+        res.status(201).json({ message: 'Player registered successfully', playerToken: player.playerToken });
     }
     catch (error) {
         console.error('Error registering player:', error);
-        res.status(500).json({ success: false, message: 'Error registering player', error: error });
+        res.status(500).json({ message: 'Error registering player', error: error });
     }
 }));
 router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { playerToken, username, birthDate, avatar } = req.body;
         if (!username || !birthDate || !avatar || !playerToken) {
-            return res.status(400).json({ success: false, message: 'Missing required fields: username, birthDate, avatar, playerToken' });
+            return res.status(400).json({ message: 'Missing required fields: username, birthDate, avatar, playerToken' });
         }
         const user = yield (0, DatabaseManager_1.getData)('playerToken', playerToken);
         if (!user) {
-            return res.status(404).json({success: false,  message: 'User not found' });
+            return res.status(404).json({ message: 'User not found' });
         }
         const updatedUser = {
             username: username || user.username,
@@ -42,15 +42,15 @@ router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awa
         };
         const updateResult = yield (0, DatabaseManager_1.completeProfile)(playerToken, updatedUser);
         if (updateResult.success) {
-            return res.status(200).json({ success: true, message: 'Profile completed successfully', user: updatedUser });
+            return res.status(200).json({ message: 'Profile completed successfully', user: updatedUser });
         }
         else {
-            return res.status(500).json({ success: false, message: 'Failed to update profile' });
+            return res.status(500).json({ message: 'Failed to update profile' });
         }
     }
     catch (error) {
         console.error('Error completing player profile:', error);
-        res.status(500).json({ success: false, message: 'Error completing player profile', error });
+        res.status(500).json({ message: 'Error completing player profile', error });
     }
 }));
 exports.default = router;
