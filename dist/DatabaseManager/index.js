@@ -14,12 +14,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getData = exports.loginUser = void 0;
 __exportStar(require("./SaveUserData"), exports);
 __exportStar(require("./saveFriendsData"), exports);
 __exportStar(require("./saveStatsData"), exports);
 __exportStar(require("./saveGroupData"), exports);
 __exportStar(require("./savePlayerData"), exports);
-var GetData_1 = require("./GetData");
-Object.defineProperty(exports, "loginUser", { enumerable: true, get: function () { return GetData_1.loginUser; } });
-Object.defineProperty(exports, "getData", { enumerable: true, get: function () { return GetData_1.getData; } });
+__exportStar(require("./saveGameResult"), exports);
+__exportStar(require("./GetData"), exports);

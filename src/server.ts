@@ -15,6 +15,8 @@ app.use('/login', Auth.loginRoutes);
 app.use('/friendsManager', jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
 app.use('/statsManager', jwt.authenticateJWT, Profile.updateStats);
 app.use('/profileManager', jwt.authenticateJWT, Profile.updateProfile);
+app.use('/gameManager', jwt.authenticateJWT, Profile.gameManager);
+app.use('/playerInfo', jwt.authenticateJWT, Profile.playerInfo);
 app.use('/groupManager', jwt.authenticateJWT, Group.groupManager);
 
 

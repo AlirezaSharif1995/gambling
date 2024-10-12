@@ -26,4 +26,18 @@ router.post('/createGroup', (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(500).json({ message: 'Error Creating Group:', error });
     }
 }));
+router.post('/getGroupInfo', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { groupID } = req.body;
+        if (!groupID) {
+            return res.status(400).json({ message: 'Missing required fields: groupID' });
+        }
+        const result = yield (0, DatabaseManager_1.getGroupData)(groupID);
+        return res.status(200).json(result);
+    }
+    catch (error) {
+        console.error('Error Get Group Info:', error);
+        res.status(500).json({ message: 'Error Get Group Info:', error });
+    }
+}));
 exports.default = router;

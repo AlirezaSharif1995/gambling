@@ -8,7 +8,7 @@ router.post('/', async (req: Request, res: Response) => {
         const { playerToken } = req.body;
 
         if (!playerToken) {
-            return res.status(400).json({ message: 'Missing required fields: playerToken' });
+            return res.status(400).json({ succes: true, message: 'Missing required fields: playerToken' });
         }
 
         const result = await loginUser(playerToken);

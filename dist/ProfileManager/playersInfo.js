@@ -14,16 +14,16 @@ const DatabaseManager_1 = require("../DatabaseManager");
 const router = (0, express_1.Router)();
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { playerToken } = req.body;
-        if (!playerToken) {
-            return res.status(400).json({ succes: true, message: 'Missing required fields: playerToken' });
+        const { userToken } = req.body;
+        if (!userToken) {
+            return res.status(400).json({ message: 'Missing required fields: playerToken, type' });
         }
-        const result = yield (0, DatabaseManager_1.loginUser)(playerToken);
-        res.status(201).json({ result });
+        const result = yield (0, DatabaseManager_1.getPlayerData)(userToken);
+        res.status(200).json(result);
     }
     catch (error) {
-        console.error('Error login player:', error);
-        res.status(500).json({ message: 'Error login player', error: error });
+        console.error('Error Get Player Info:', error);
+        res.status(500).json({ message: 'Error Get Player Info:', error: error });
     }
 }));
 exports.default = router;

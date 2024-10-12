@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { createGroup } from '../DatabaseManager'
+import { createGroup, getGroupData } from '../DatabaseManager'
 const router = Router();
 
 router.post('/createGroup', async (req: Request, res: Response) => {
@@ -23,4 +23,22 @@ router.post('/createGroup', async (req: Request, res: Response) => {
 
 });
 
+router.post('/getGroupInfo', async (req: Request, res: Response) => {
+
+    try {
+        const { groupID } = req.body;
+        if (!groupID) {
+            return res.status(400).json({ message: 'Missing required fields: groupID' });
+        }
+        const result = await getGroupData(groupID);
+        return res.status(200).json(result);
+
+    } catch (error) {
+
+        console.error('Error Get Group Info:', error);
+        res.status(500).json({ message: 'Error Get Group Info:', error });
+    }
+
+});
+ 
 export default router; 

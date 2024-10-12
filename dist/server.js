@@ -41,6 +41,8 @@ app.use('/login', Auth.loginRoutes);
 app.use('/friendsManager', utils_1.jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
 app.use('/statsManager', utils_1.jwt.authenticateJWT, Profile.updateStats);
 app.use('/profileManager', utils_1.jwt.authenticateJWT, Profile.updateProfile);
+app.use('/gameManager', utils_1.jwt.authenticateJWT, Profile.gameManager);
+app.use('/playerInfo', utils_1.jwt.authenticateJWT, Profile.playerInfo);
 app.use('/groupManager', utils_1.jwt.authenticateJWT, Group.groupManager);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

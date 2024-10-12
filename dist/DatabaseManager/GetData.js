@@ -14,6 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = loginUser;
 exports.getData = getData;
+exports.getGameByPlayerToken = getGameByPlayerToken;
+exports.getPlayerData = getPlayerData;
+exports.getGroupData = getGroupData;
 const promise_1 = __importDefault(require("mysql2/promise"));
 const jwt_1 = require("../utils/jwt");
 const pool = promise_1.default.createPool({
@@ -22,6 +25,7 @@ const pool = promise_1.default.createPool({
     password: 'Alireza1995!',
     database: 'game_db',
 });
+const notValidRequest = ['playerToken'];
 function loginUser(playerToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -45,6 +49,9 @@ function loginUser(playerToken) {
 function getData(type, playerToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            if (notValidRequest.includes(type)) {
+                return { success: false, message: `The input "${type}" is not valid.` };
+            }
             const query = `SELECT * FROM players WHERE playerToken = ?`;
             const [rows] = yield pool.query(query, [playerToken]);
             if (rows.length > 0 && rows[0].hasOwnProperty(type)) {
@@ -57,6 +64,64 @@ function getData(type, playerToken) {
         catch (error) {
             console.error('Error get data:', error);
             return { success: false, message: 'Error get data: ' + error };
+        }
+    });
+}
+function getGameByPlayerToken(playerToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const query = `
+          SELECT * FROM game_results 
+          WHERE player1_id = ? OR player2_id = ?
+        `;
+            const [rows, fields] = yield pool.query(query, [playerToken, playerToken]);
+            if (rows.length === 0) {
+                return { success: false, message: 'No game results found for this player' };
+            }
+            return { success: true, data: rows };
+        }
+        catch (error) {
+            console.error('Error fetching game results by player ID:', error);
+            return { success: false, message: 'Failed to retrieve game results' };
+        }
+    });
+}
+function getPlayerData(playerToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const query = `
+            SELECT winCount, loseCount, coins, avatar, username, \`groups\` 
+            FROM players 
+            WHERE playerToken = ?
+        `;
+            const [rows, fields] = yield pool.query(query, [playerToken]);
+            if (rows.length === 0) {
+                return { success: false, message: 'Player not found' };
+            }
+            return { success: true, data: rows[0] };
+        }
+        catch (error) {
+            console.error('Error fetching player data:', error);
+            return { success: false, message: 'Failed to retrieve player data' };
+        }
+    });
+}
+function getGroupData(groupID) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const query = `
+            SELECT name, avatar, description, leader_id, is_private, members FROM \`group\`
+            WHERE id = ?
+        `;
+            const [rows, fields] = yield pool.query(query, [groupID]);
+            if (rows.length === 0) {
+                return { success: false, message: 'Group not found' };
+            }
+            return { success: true, data: rows[0] };
+        }
+        catch (error) {
+            console.error('Error fetching Group data:', error);
+            return { success: false, message: 'Failed to retrieve Group data' };
         }
     });
 }
