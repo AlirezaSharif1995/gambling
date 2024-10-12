@@ -16,7 +16,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { playerToken } = req.body;
         if (!playerToken) {
-            return res.status(400).json({ succes: true, message: 'Missing required fields: playerToken' });
+            return res.status(400).json({ message: 'Missing required fields: playerToken' });
         }
         const result = yield (0, DatabaseManager_1.loginUser)(playerToken);
         res.status(201).json({ result });
