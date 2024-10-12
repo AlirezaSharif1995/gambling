@@ -40,5 +40,9 @@ router.post('/getGroupInfo', async (req: Request, res: Response) => {
     }
 
 });
- 
+
+router.post('/recommendedGroup', async (req: Request, res: Response) => {
+
+});
+
 export default router; 

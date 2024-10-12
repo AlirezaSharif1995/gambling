@@ -40,4 +40,6 @@ router.post('/getGroupInfo', (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).json({ message: 'Error Get Group Info:', error });
     }
 }));
+router.post('/recommendedGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
 exports.default = router;
