@@ -6,7 +6,7 @@ import { ResultSetHeader, RowDataPacket } from 'mysql2';
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: 'Alireza1995!',
+  password: 'Hamid87138002?',
   database: 'game_db',
 });
 
@@ -29,15 +29,26 @@ export async function registerUser(User: User) {
 
 export async function completeProfile(playerToken: string, updatedUser: any) {
   try {
-    const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ? WHERE playerToken = ?`;
+    const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ?, bio = ?, coins = ? WHERE playerToken = ?`;
 
     // Casting result to ResultSetHeader to access affectedRows
     const [result] = await pool.query<ResultSetHeader>(query, [
-      updatedUser.username,
-      updatedUser.birthDate,
-      updatedUser.avatar,
+      updatedUser.username || 'Guest',
+      updatedUser.birthDate || '',
+      updatedUser.avatar || 0,
+      updatedUser.bio || '',
+      updatedUser.coin || 0,
       playerToken
     ]);
+
+    console.log(updatedUser.username)
+    console.log(updatedUser.birthDate)
+    console.log(updatedUser.avatar)
+    console.log(updatedUser.bio)
+    console.log(updatedUser.coin)
+    console.log(playerToken)
+
+    console.log(result)
 
     // Check if rows were affected
     return { success: result.affectedRows > 0 };
