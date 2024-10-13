@@ -5,6 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d9062b9-4fcd-4d20-b2b7-a8ca00dfaefd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/dist/Authentication/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Authentication/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/Authentication/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Authentication/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/Authentication/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Authentication/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/Authentication/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Authentication/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/GetData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/GetData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/SaveUserData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/SaveUserData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveFriendsData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveFriendsData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveGameResult.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveGameResult.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveGroupData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveGroupData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/savePlayerData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/savePlayerData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveStatsData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveStatsData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/FriendsManager/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/FriendsManager/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/FriendsManager/updateFirendList.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/FriendsManager/updateFirendList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/Groups/GroupManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Groups/GroupManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/Groups/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Groups/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ProfileManager/Stats.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ProfileManager/Stats.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ProfileManager/gameManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ProfileManager/gameManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ProfileManager/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ProfileManager/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ProfileManager/playersInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ProfileManager/playersInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ProfileManager/updateProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ProfileManager/updateProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/SocketManager/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/SocketManager/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/SocketManager/socketGateway.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/SocketManager/socketGateway.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utils/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/utils/jwt.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utils/jwt.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DatabaseManager/SaveUserData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/SaveUserData.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveFriendsData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveFriendsData.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveGameResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveGameResult.ts" afterDir="false" />
@@ -61,7 +87,7 @@
       <updated>1727595061204</updated>
       <workItem from="1727595063887" duration="239000" />
       <workItem from="1728253949101" duration="1487000" />
-      <workItem from="1728841568178" duration="14112000" />
+      <workItem from="1728841568178" duration="14569000" />
     </task>
     <servers />
   </component>

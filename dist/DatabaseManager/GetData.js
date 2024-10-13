@@ -22,7 +22,7 @@ const jwt_1 = require("../utils/jwt");
 const pool = promise_1.default.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'Alireza1995!',
+    password: 'Hamid87138002?',
     database: 'game_db',
 });
 const notValidRequest = ['playerToken'];
@@ -38,6 +38,10 @@ function loginUser(playerToken) {
             const user = rows[0]; // Access the first row (the user)
             // Generate a JWT token
             const token = (0, jwt_1.generateToken)(playerToken); // Assuming user.id is the identifier
+            const playerData = {
+                username: user.username,
+                avatar: user.avatar
+            };
             return { success: true, message: 'Login successful', token };
         }
         catch (error) {
@@ -90,7 +94,7 @@ function getPlayerData(playerToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const query = `
-            SELECT winCount, loseCount, coins, avatar, username, \`groups\` 
+            SELECT winCount, loseCount, coins, avatar, username,bio, \`groups\` 
             FROM players 
             WHERE playerToken = ?
         `;
@@ -98,7 +102,7 @@ function getPlayerData(playerToken) {
             if (rows.length === 0) {
                 return { success: false, message: 'Player not found' };
             }
-            return { success: true, data: rows[0] };
+            return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || '' };
         }
         catch (error) {
             console.error('Error fetching player data:', error);

@@ -16,14 +16,14 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { playerToken } = req.body;
         if (!playerToken) {
-            return res.status(400).json({ succes: true, message: 'Missing required fields: playerToken' });
+            return res.status(400).json({ success: true, message: 'Missing required fields: playerToken' });
         }
         const result = yield (0, DatabaseManager_1.loginUser)(playerToken);
-        res.status(201).json({ result });
+        res.status(201).json(result);
     }
     catch (error) {
         console.error('Error login player:', error);
-        res.status(500).json({ message: 'Error login player', error: error });
+        res.status(500).json({ success: false, message: 'Error login player', error: error });
     }
 }));
 exports.default = router;
