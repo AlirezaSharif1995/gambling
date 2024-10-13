@@ -5,7 +5,7 @@ import { RowDataPacket, FieldPacket } from 'mysql2';
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'Alireza1995!',
+    password: 'Hamid87138002?',
     database: 'game_db',
 });
 
@@ -26,7 +26,13 @@ export async function loginUser(playerToken: string) {
         // Generate a JWT token
         const token = generateToken(playerToken); // Assuming user.id is the identifier
 
-        return { success: true, message: 'Login successful', token };
+        const playerData =
+        {
+            username : user.username,
+            avatar : user.avatar
+        }
+
+        return { success: true, message: 'Login successful', token};
     } catch (error) {
         console.error('Error logging in user:', error);
         return { success: false, message: 'Error logging in user: ' + error };
@@ -84,7 +90,7 @@ export async function getPlayerData(playerToken: string) {
     try {
 
         const query = `
-            SELECT winCount, loseCount, coins, avatar, username, \`groups\` 
+            SELECT winCount, loseCount, coins, avatar, username,bio, \`groups\` 
             FROM players 
             WHERE playerToken = ?
         `;
@@ -95,7 +101,7 @@ export async function getPlayerData(playerToken: string) {
             return { success: false, message: 'Player not found' };
         }
 
-        return { success: true, data: rows[0] };
+        return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || ''};
 
     } catch (error) {
         console.error('Error fetching player data:', error);

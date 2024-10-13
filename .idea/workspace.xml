@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9062b9-4fcd-4d20-b2b7-a8ca00dfaefd" name="Changes" comment="" />
+    <list default="true" id="1d9062b9-4fcd-4d20-b2b7-a8ca00dfaefd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Authentication/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Authentication/login.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Authentication/register.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Authentication/register.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/GetData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/GetData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/SaveUserData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/SaveUserData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveFriendsData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveFriendsData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveGameResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveGameResult.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveGroupData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveGroupData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/savePlayerData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/savePlayerData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveStatsData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveStatsData.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +34,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Node.js.register.ts.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
@@ -53,6 +65,7 @@
       <updated>1727595061204</updated>
       <workItem from="1727595063887" duration="239000" />
       <workItem from="1728253949101" duration="1487000" />
+      <workItem from="1728841568178" duration="13796000" />
     </task>
     <servers />
   </component>
