@@ -34,7 +34,7 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.post('/completeProfile', jwt.authenticateJWT, async (req: Request, res: Response) => {
   try {
-    const { playerToken, username, birthDate, avatar, bio } = req.body;
+    const { playerToken, username, birthDate, avatar, bio, country } = req.body;
 
     if (!username || !playerToken) {
       return res.status(400).json({ success: false, message: 'Missing required fields: username, avatar, playerToken' });
@@ -50,7 +50,8 @@ router.post('/completeProfile', jwt.authenticateJWT, async (req: Request, res: R
       username: username || user.username,
       birthDate: new Date(birthDate) || user.birthDate,
       avatar: avatar || user.avatar,
-      bio: bio || ''
+      bio: bio || '',
+      country: country || ''
     };
 
     const updateResult = await completeProfile(playerToken, updatedUser);

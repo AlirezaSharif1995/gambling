@@ -37,7 +37,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { playerToken, username, birthDate, avatar, bio } = req.body;
+        const { playerToken, username, birthDate, avatar, bio, country } = req.body;
         if (!username || !playerToken) {
             return res.status(400).json({ success: false, message: 'Missing required fields: username, avatar, playerToken' });
         }
@@ -49,7 +49,8 @@ router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awa
             username: username || user.username,
             birthDate: new Date(birthDate) || user.birthDate,
             avatar: avatar || user.avatar,
-            bio: bio || ''
+            bio: bio || '',
+            country: country || ''
         };
         const updateResult = yield (0, DatabaseManager_1.completeProfile)(playerToken, updatedUser);
         if (updateResult.success) {

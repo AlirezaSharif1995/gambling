@@ -29,7 +29,7 @@ export async function registerUser(User: User) {
 
 export async function completeProfile(playerToken: string, updatedUser: any) {
   try {
-    const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ?, bio = ?, coins = ? WHERE playerToken = ?`;
+    const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ?, bio = ?, coins = ?, country = ? WHERE playerToken = ?`;
 
     // Casting result to ResultSetHeader to access affectedRows
     const [result] = await pool.query<ResultSetHeader>(query, [
@@ -38,17 +38,9 @@ export async function completeProfile(playerToken: string, updatedUser: any) {
       updatedUser.avatar || 0,
       updatedUser.bio || '',
       updatedUser.coin || 0,
+      updatedUser.country || '',
       playerToken
     ]);
-
-    console.log(updatedUser.username)
-    console.log(updatedUser.birthDate)
-    console.log(updatedUser.avatar)
-    console.log(updatedUser.bio)
-    console.log(updatedUser.coin)
-    console.log(playerToken)
-
-    console.log(result)
 
     // Check if rows were affected
     return { success: result.affectedRows > 0 };
@@ -77,5 +69,4 @@ export async function updateData(playerToken: string, type: string, data: any) {
     console.error('Error updating user data:', error);
     return { success: false };
   }
-
 }

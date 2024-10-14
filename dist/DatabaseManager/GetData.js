@@ -94,7 +94,7 @@ function getPlayerData(playerToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const query = `
-            SELECT winCount, loseCount, coins, avatar, username,bio, \`groups\` 
+            SELECT winCount, loseCount, coins, avatar, username,bio,country \`groups\` 
             FROM players 
             WHERE playerToken = ?
         `;
@@ -102,7 +102,7 @@ function getPlayerData(playerToken) {
             if (rows.length === 0) {
                 return { success: false, message: 'Player not found' };
             }
-            return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || '' };
+            return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || '', country: rows[0].country };
         }
         catch (error) {
             console.error('Error fetching player data:', error);
