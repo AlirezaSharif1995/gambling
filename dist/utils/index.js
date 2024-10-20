@@ -22,6 +22,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.jwt = void 0;
+exports.remote = exports.jwt = void 0;
 exports.jwt = __importStar(require("./jwt"));
+var remoteConfig_1 = require("./remoteConfig");
+Object.defineProperty(exports, "remote", { enumerable: true, get: function () { return __importDefault(remoteConfig_1).default; } });

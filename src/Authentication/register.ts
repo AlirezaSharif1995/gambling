@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { getData, completeProfile } from '../DatabaseManager';
+import { getData, completeProfile, SetCoin } from '../DatabaseManager';
 import { User } from './user';
 import { jwt } from '../utils';
 import {debug} from "node:util";
@@ -24,6 +24,7 @@ router.post('/', async (req: Request, res: Response) => {
     };
 
     await completeProfile(player.playerToken, updatedUser);
+    await SetCoin(player.playerToken, updatedUser.coin)
 
     res.status(201).json({ success: true, message: 'Player registered successfully', playerToken: player.playerToken, token: token});
   } catch (error) {
@@ -34,7 +35,7 @@ router.post('/', async (req: Request, res: Response) => {
 
 router.post('/completeProfile', jwt.authenticateJWT, async (req: Request, res: Response) => {
   try {
-    const { playerToken, username, birthDate, avatar, bio, country } = req.body;
+    const { playerToken, username, birthDate, avatar, bio, country, birthdate } = req.body;
 
     if (!username || !playerToken) {
       return res.status(400).json({ success: false, message: 'Missing required fields: username, avatar, playerToken' });
@@ -51,13 +52,14 @@ router.post('/completeProfile', jwt.authenticateJWT, async (req: Request, res: R
       birthDate: new Date(birthDate) || user.birthDate,
       avatar: avatar || user.avatar,
       bio: bio || '',
-      country: country || ''
+      country: country || '',
+      birthdate: birthdate || ''
     };
 
     const updateResult = await completeProfile(playerToken, updatedUser);
 
     if (updateResult.success) {
-      return res.status(200).json({ success: true, message: 'Profile completed successfully', username: updatedUser.username || "", avatar: updatedUser.avatar || 0, bio: updatedUser.bio || ''});
+      return res.status(200).json({ success: true, message: 'Profile completed successfully', username: updatedUser.username || "", avatar: updatedUser.avatar || 0, bio: updatedUser.bio || '', country: updatedUser.country, birthdate: updatedUser.birthdate || ''});
     } else {
       return res.status(500).json({ success: false, message: 'Failed to update profile' });
     }

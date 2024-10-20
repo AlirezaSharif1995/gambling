@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const utils_1 = require("./utils");
+const utils = __importStar(require("./utils"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const Auth = __importStar(require("./Authentication")); // Import from index.ts
 const FriendsManager = __importStar(require("./FriendsManager"));
@@ -38,12 +38,13 @@ const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 app.use('/register', Auth.registerRoutes);
 app.use('/login', Auth.loginRoutes);
-app.use('/friendsManager', utils_1.jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
-app.use('/statsManager', utils_1.jwt.authenticateJWT, Profile.updateStats);
-app.use('/profileManager', utils_1.jwt.authenticateJWT, Profile.updateProfile);
-app.use('/gameManager', utils_1.jwt.authenticateJWT, Profile.gameManager);
-app.use('/playerInfo', utils_1.jwt.authenticateJWT, Profile.playerInfo);
-app.use('/groupManager', utils_1.jwt.authenticateJWT, Group.groupManager);
+app.use('/friendsManager', utils.jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
+app.use('/statsManager', utils.jwt.authenticateJWT, Profile.updateStats);
+app.use('/profileManager', utils.jwt.authenticateJWT, Profile.updateProfile);
+app.use('/gameManager', utils.jwt.authenticateJWT, Profile.gameManager);
+app.use('/playerInfo', utils.jwt.authenticateJWT, Profile.playerInfo);
+app.use('/groupManager', utils.jwt.authenticateJWT, Group.groupManager);
+app.use('/remoteConfig', utils.jwt.authenticateJWT, utils.remote);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

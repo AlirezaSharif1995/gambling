@@ -82,7 +82,16 @@ function getGameByPlayerToken(playerToken) {
             if (rows.length === 0) {
                 return { success: false, message: 'No game results found for this player' };
             }
-            return { success: true, data: rows };
+            // Get opponent information using getPlayerData
+            const gamesWithOpponentData = yield Promise.all(rows.map((game) => __awaiter(this, void 0, void 0, function* () {
+                const opponentId = game.player1_id === playerToken ? game.player2_id : game.player1_id;
+                const opponentData = yield getPlayerData(opponentId);
+                if (!opponentData) {
+                    return { success: false, message: 'Opponent not found' };
+                }
+                return Object.assign(Object.assign({}, game), { opponentName: opponentData.username, opponentAvatar: opponentData.avatar });
+            })));
+            return { success: true, data: gamesWithOpponentData };
         }
         catch (error) {
             console.error('Error fetching game results by player ID:', error);
@@ -94,7 +103,7 @@ function getPlayerData(playerToken) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const query = `
-            SELECT winCount, loseCount, coins, avatar, username,bio,country \`groups\` 
+            SELECT winCount, loseCount, coins, avatar, username, bio, country,birthDate \`groups\` 
             FROM players 
             WHERE playerToken = ?
         `;
@@ -102,7 +111,7 @@ function getPlayerData(playerToken) {
             if (rows.length === 0) {
                 return { success: false, message: 'Player not found' };
             }
-            return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || '', country: rows[0].country };
+            return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || '', country: rows[0].country, birthdate: rows[0].birthDate };
         }
         catch (error) {
             console.error('Error fetching player data:', error);

@@ -29,16 +29,33 @@ export async function registerUser(User: User) {
 
 export async function completeProfile(playerToken: string, updatedUser: any) {
   try {
-    const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ?, bio = ?, coins = ?, country = ? WHERE playerToken = ?`;
+    const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ?, bio = ?, country = ? WHERE playerToken = ?`;
 
     // Casting result to ResultSetHeader to access affectedRows
     const [result] = await pool.query<ResultSetHeader>(query, [
       updatedUser.username || 'Guest',
-      updatedUser.birthDate || '',
+      updatedUser.birthdate || '',
       updatedUser.avatar || 0,
       updatedUser.bio || '',
-      updatedUser.coin || 0,
       updatedUser.country || '',
+      playerToken
+    ]);
+
+    // Check if rows were affected
+    return { success: result.affectedRows > 0 };
+  } catch (error) {
+    console.error('Error updating user data:', error);
+    return { success: false };
+  }
+}
+
+export async function SetCoin(playerToken: string, coin: number) {
+  try {
+    const query = `UPDATE players SET coins = ? WHERE playerToken = ?`;
+
+    // Casting result to ResultSetHeader to access affectedRows
+    const [result] = await pool.query<ResultSetHeader>(query, [
+      coin,
       playerToken
     ]);
 

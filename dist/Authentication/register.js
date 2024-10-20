@@ -28,6 +28,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             bio: '',
         };
         yield (0, DatabaseManager_1.completeProfile)(player.playerToken, updatedUser);
+        yield (0, DatabaseManager_1.SetCoin)(player.playerToken, updatedUser.coin);
         res.status(201).json({ success: true, message: 'Player registered successfully', playerToken: player.playerToken, token: token });
     }
     catch (error) {
@@ -37,7 +38,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { playerToken, username, birthDate, avatar, bio, country } = req.body;
+        const { playerToken, username, birthDate, avatar, bio, country, birthdate } = req.body;
         if (!username || !playerToken) {
             return res.status(400).json({ success: false, message: 'Missing required fields: username, avatar, playerToken' });
         }
@@ -50,11 +51,12 @@ router.post('/completeProfile', utils_1.jwt.authenticateJWT, (req, res) => __awa
             birthDate: new Date(birthDate) || user.birthDate,
             avatar: avatar || user.avatar,
             bio: bio || '',
-            country: country || ''
+            country: country || '',
+            birthdate: birthdate || ''
         };
         const updateResult = yield (0, DatabaseManager_1.completeProfile)(playerToken, updatedUser);
         if (updateResult.success) {
-            return res.status(200).json({ success: true, message: 'Profile completed successfully', username: updatedUser.username || "", avatar: updatedUser.avatar || 0, bio: updatedUser.bio || '' });
+            return res.status(200).json({ success: true, message: 'Profile completed successfully', username: updatedUser.username || "", avatar: updatedUser.avatar || 0, bio: updatedUser.bio || '', country: updatedUser.country, birthdate: updatedUser.birthdate || '' });
         }
         else {
             return res.status(500).json({ success: false, message: 'Failed to update profile' });

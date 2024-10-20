@@ -26,4 +26,18 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ message: 'Error Get Player Info:', error: error });
     }
 }));
+router.post('/games', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { playerToken } = req.body;
+        if (!playerToken) {
+            return res.status(400).json({ message: 'Missing required fields: playerToken, type' });
+        }
+        const result = yield (0, DatabaseManager_1.getGameByPlayerToken)(playerToken);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        console.error('Error Get Player Info:', error);
+        res.status(500).json({ message: 'Error Get Player Info:', error: error });
+    }
+}));
 exports.default = router;

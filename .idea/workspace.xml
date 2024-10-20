@@ -5,19 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d9062b9-4fcd-4d20-b2b7-a8ca00dfaefd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/dots" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/Authentication/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/Authentication/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/GetData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/GetData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/SaveUserData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/SaveUserData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveFriendsData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveFriendsData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveGameResult.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveGameResult.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveGroupData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveGroupData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/savePlayerData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/savePlayerData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/DatabaseManager/saveStatsData.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/DatabaseManager/saveStatsData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Authentication/register.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Authentication/register.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/GetData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/GetData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DatabaseManager/SaveUserData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/SaveUserData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cookie/HISTORY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cookie/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/cookie/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cookie/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/cookie/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cookie/SECURITY.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/cookie/SECURITY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cookie/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/cookie/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/cookie/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/cookie/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/History.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/History.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/Readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/express.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/express.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/middleware/init.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/middleware/init.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/middleware/query.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/middleware/query.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/response.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/response.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/router/layer.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/router/layer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/router/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/router/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/lib/view.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/lib/view.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/express/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/express/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveFriendsData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveFriendsData.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveGameResult.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveGameResult.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DatabaseManager/saveGroupData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseManager/saveGroupData.ts" afterDir="false" />
@@ -40,22 +58,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Node.js.register.ts.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/Gambling Server/gambling",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Gambling Server\\gambling\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.register.ts.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Gambling Server/gambling&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Gambling Server\\gambling\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -74,6 +92,9 @@
       <workItem from="1727595063887" duration="239000" />
       <workItem from="1728253949101" duration="1487000" />
       <workItem from="1728841568178" duration="20771000" />
+      <workItem from="1728867582027" duration="161000" />
+      <workItem from="1728878378716" duration="2101000" />
+      <workItem from="1729021886709" duration="15000" />
     </task>
     <servers />
   </component>

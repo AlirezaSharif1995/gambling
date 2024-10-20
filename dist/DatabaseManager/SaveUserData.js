@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = registerUser;
 exports.completeProfile = completeProfile;
+exports.SetCoin = SetCoin;
 exports.updateData = updateData;
 const promise_1 = __importDefault(require("mysql2/promise"));
 // Database connection setup
@@ -45,15 +46,32 @@ function registerUser(User) {
 function completeProfile(playerToken, updatedUser) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ?, bio = ?, coins = ?, country = ? WHERE playerToken = ?`;
+            const query = `UPDATE players SET username = ?, birthDate = ?, avatar = ?, bio = ?, country = ? WHERE playerToken = ?`;
             // Casting result to ResultSetHeader to access affectedRows
             const [result] = yield pool.query(query, [
                 updatedUser.username || 'Guest',
-                updatedUser.birthDate || '',
+                updatedUser.birthdate || '',
                 updatedUser.avatar || 0,
                 updatedUser.bio || '',
-                updatedUser.coin || 0,
                 updatedUser.country || '',
+                playerToken
+            ]);
+            // Check if rows were affected
+            return { success: result.affectedRows > 0 };
+        }
+        catch (error) {
+            console.error('Error updating user data:', error);
+            return { success: false };
+        }
+    });
+}
+function SetCoin(playerToken, coin) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const query = `UPDATE players SET coins = ? WHERE playerToken = ?`;
+            // Casting result to ResultSetHeader to access affectedRows
+            const [result] = yield pool.query(query, [
+                coin,
                 playerToken
             ]);
             // Check if rows were affected

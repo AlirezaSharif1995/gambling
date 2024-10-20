@@ -1,5 +1,5 @@
 import express from 'express';
-import { jwt } from './utils';
+import * as utils from './utils';
 import bodyParser from 'body-parser';
 import * as Auth from './Authentication'; // Import from index.ts
 import * as FriendsManager from './FriendsManager';
@@ -12,12 +12,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use('/register', Auth.registerRoutes);
 app.use('/login', Auth.loginRoutes);
-app.use('/friendsManager', jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
-app.use('/statsManager', jwt.authenticateJWT, Profile.updateStats);
-app.use('/profileManager', jwt.authenticateJWT, Profile.updateProfile);
-app.use('/gameManager', jwt.authenticateJWT, Profile.gameManager);
-app.use('/playerInfo', jwt.authenticateJWT, Profile.playerInfo);
-app.use('/groupManager', jwt.authenticateJWT, Group.groupManager);
+app.use('/friendsManager', utils.jwt.authenticateJWT, FriendsManager.updateFreindsRoutes);
+app.use('/statsManager', utils.jwt.authenticateJWT, Profile.updateStats);
+app.use('/profileManager', utils.jwt.authenticateJWT, Profile.updateProfile);
+app.use('/gameManager', utils.jwt.authenticateJWT, Profile.gameManager);
+app.use('/playerInfo', utils.jwt.authenticateJWT, Profile.playerInfo);
+app.use('/groupManager', utils.jwt.authenticateJWT, Group.groupManager);
+app.use('/remoteConfig', utils.jwt.authenticateJWT, utils.remote);
 
 
 app.listen(PORT, () => {

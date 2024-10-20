@@ -76,13 +76,30 @@ export async function getGameByPlayerToken(playerToken: string) {
             return { success: false, message: 'No game results found for this player' };
         }
 
-        return { success: true, data: rows };
+        // Get opponent information using getPlayerData
+        const gamesWithOpponentData = await Promise.all(
+            rows.map(async (game) => {
+                const opponentId = game.player1_id === playerToken ? game.player2_id : game.player1_id;
+                const opponentData = await getPlayerData(opponentId);
+
+                if (!opponentData) {
+                    return { success: false, message: 'Opponent not found' };
+                }
+
+                return {
+                    ...game,
+                    opponentName: opponentData.username,
+                    opponentAvatar: opponentData.avatar
+                };
+            })
+        );
+
+        return { success: true, data: gamesWithOpponentData };
 
     } catch (error) {
         console.error('Error fetching game results by player ID:', error);
         return { success: false, message: 'Failed to retrieve game results' };
     }
-
 }
 
 export async function getPlayerData(playerToken: string) {
@@ -90,7 +107,7 @@ export async function getPlayerData(playerToken: string) {
     try {
 
         const query = `
-            SELECT winCount, loseCount, coins, avatar, username,bio,country \`groups\` 
+            SELECT winCount, loseCount, coins, avatar, username, bio, country,birthDate \`groups\` 
             FROM players 
             WHERE playerToken = ?
         `;
@@ -101,7 +118,7 @@ export async function getPlayerData(playerToken: string) {
             return { success: false, message: 'Player not found' };
         }
 
-        return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || '', country: rows[0].country};
+        return { success: true, username: rows[0].username, avatar: rows[0].avatar, winCount: rows[0].winCount, loseCount: rows[0].loseCount, coin: rows[0].coins, bio: rows[0].bio || '', country: rows[0].country, birthdate: rows[0].birthDate};
 
     } catch (error) {
         console.error('Error fetching player data:', error);
@@ -122,6 +139,7 @@ export async function getGroupData(groupID: string) {
         if (rows.length === 0) {
             return { success: false, message: 'Group not found' };
         }
+
         return { success: true, data: rows[0] };
 
     } catch (error) {
