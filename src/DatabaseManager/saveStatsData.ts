@@ -6,7 +6,7 @@ type StatType = 'winCount' | 'loseCount';
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: 'Hamid87138002?',
+  password: 'Alireza1995!',
   database: 'game_db',
 });
 

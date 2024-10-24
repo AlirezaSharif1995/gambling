@@ -5,7 +5,7 @@ import { RowDataPacket, FieldPacket } from 'mysql2';
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'Hamid87138002?',
+    password: 'Alireza1995!',
     database: 'game_db',
 });
 
@@ -73,7 +73,7 @@ export async function getGameByPlayerToken(playerToken: string) {
         const [rows, fields]: [RowDataPacket[], FieldPacket[]] = await pool.query(query, [playerToken, playerToken]);
 
         if (rows.length === 0) {
-            return { success: false, message: 'No game results found for this player' };
+            return { success: true, message: 'No game results found for this player', data:"" };
         }
 
         // Get opponent information using getPlayerData

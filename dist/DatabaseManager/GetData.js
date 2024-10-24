@@ -22,7 +22,7 @@ const jwt_1 = require("../utils/jwt");
 const pool = promise_1.default.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'Hamid87138002?',
+    password: 'Alireza1995!',
     database: 'game_db',
 });
 const notValidRequest = ['playerToken'];
@@ -80,7 +80,7 @@ function getGameByPlayerToken(playerToken) {
         `;
             const [rows, fields] = yield pool.query(query, [playerToken, playerToken]);
             if (rows.length === 0) {
-                return { success: false, message: 'No game results found for this player' };
+                return { success: true, message: 'No game results found for this player', data: "" };
             }
             // Get opponent information using getPlayerData
             const gamesWithOpponentData = yield Promise.all(rows.map((game) => __awaiter(this, void 0, void 0, function* () {

@@ -20,7 +20,6 @@ app.use('/playerInfo', utils.jwt.authenticateJWT, Profile.playerInfo);
 app.use('/groupManager', utils.jwt.authenticateJWT, Group.groupManager);
 app.use('/remoteConfig', utils.jwt.authenticateJWT, utils.remote);
 
-
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
