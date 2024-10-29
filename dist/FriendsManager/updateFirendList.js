@@ -15,15 +15,15 @@ const router = (0, express_1.Router)();
 router.post('/addFriend', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { playerToken, friendToken } = req.body;
     if (!playerToken || !friendToken) {
-        return res.status(400).json({ message: 'Missing required fields: playerToken, friendToken' });
+        return res.status(400).json({ success: false, message: 'Missing required fields: playerToken, friendToken' });
     }
     try {
         const result = yield (0, DatabaseManager_1.addFriendRequest)(playerToken, friendToken);
-        return res.status(200).json({ message: result });
+        return res.status(200).json({ success: result.success, message: result.message });
     }
     catch (error) {
         console.error('Error in requestAddFriend:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 }));
 router.post('/acceptAddFreind', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

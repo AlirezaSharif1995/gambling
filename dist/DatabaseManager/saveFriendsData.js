@@ -31,7 +31,7 @@ function addFriendRequest(playerToken, friendToken) {
         try {
             const [result] = yield pool.query('SELECT friendsRequests FROM players WHERE playerToken = ?', [playerToken]);
             if (result.length === 0) {
-                return 'User not found';
+                return { success: false, message: "User not found" };
             }
             let friendRequests = [];
             try {
@@ -48,18 +48,18 @@ function addFriendRequest(playerToken, friendToken) {
             }
             catch (error) {
                 console.error('Error parsing friendRequests:', error);
-                return 'Error parsing friend requests';
+                return { success: false, message: "Error parsing friend requests" };
             }
             if (friendRequests.includes(friendToken)) {
-                return 'Friend request already sent';
+                return { success: false, message: "Friend request already sent" };
             }
             friendRequests.push(friendToken);
             yield pool.query('UPDATE players SET friendsRequests = ? WHERE playerToken = ?', [JSON.stringify(friendRequests), playerToken]);
-            return 'Friend request sent successfully';
+            return { success: true, message: "Friend request sent successfully" };
         }
         catch (error) {
             console.error('Error in addFriendRequest:', error);
-            return 'Error requesting friend';
+            return { success: false, message: "Error requesting friend" };
         }
     });
 }

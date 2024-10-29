@@ -12,15 +12,15 @@ router.post('/addFriend', async (req: Request, res: Response) => {
     const { playerToken, friendToken } = req.body;
 
     if (!playerToken || !friendToken) {
-        return res.status(400).json({ message: 'Missing required fields: playerToken, friendToken' });
+        return res.status(400).json({ success:false, message: 'Missing required fields: playerToken, friendToken' });
     }
 
     try {
         const result = await addFriendRequest(playerToken, friendToken);
-        return res.status(200).json({ message: result });
+        return res.status(200).json({ success: result.success, message: result.message });
     } catch (error) {
         console.error('Error in requestAddFriend:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ success:false, message: 'Internal server error' });
     }
 });
 
