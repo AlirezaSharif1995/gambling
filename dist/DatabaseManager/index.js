@@ -20,4 +20,5 @@ __exportStar(require("./saveStatsData"), exports);
 __exportStar(require("./saveGroupData"), exports);
 __exportStar(require("./savePlayerData"), exports);
 __exportStar(require("./saveGameResult"), exports);
+__exportStar(require("./groupManager"), exports);
 __exportStar(require("./GetData"), exports);

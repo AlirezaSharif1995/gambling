@@ -42,4 +42,30 @@ router.post('/getGroupInfo', (req, res) => __awaiter(void 0, void 0, void 0, fun
 }));
 router.post('/recommendedGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
+router.post('/requestJoinGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { playerToken, groupID } = req.body;
+        if (!groupID || !playerToken) {
+            return res.status(400).json({ success: false, message: 'Missing required fields: groupID, playerToken' });
+        }
+        const result = yield (0, DatabaseManager_1.requestJoinGroup)(playerToken, groupID);
+        return res.status(200).json(result);
+    }
+    catch (error) {
+        console.error('Error Get Group Info:', error);
+        res.status(500).json({ success: false, message: 'Error Get Group Info:', error });
+    }
+}));
+router.post('/acceptRequest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
+router.post('/rejectRequest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
+router.post('/removeMember', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
+router.post('/inviteMember', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
+router.post('/removeMember', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
+router.post('/unlockInviteMember', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
 exports.default = router;
