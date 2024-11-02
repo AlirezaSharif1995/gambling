@@ -17,7 +17,7 @@ app.use('/statsManager', utils.jwt.authenticateJWT, Profile.updateStats);
 app.use('/profileManager', utils.jwt.authenticateJWT, Profile.updateProfile);
 app.use('/gameManager', utils.jwt.authenticateJWT, Profile.gameManager);
 app.use('/playerInfo', utils.jwt.authenticateJWT, Profile.playerInfo);
-app.use('/groupManager', utils.jwt.authenticateJWT, Group.groupManager);
+app.use('/groupManager', Group.groupManager);
 app.use('/remoteConfig', utils.jwt.authenticateJWT, utils.remote);
 
 app.listen(PORT, () => {

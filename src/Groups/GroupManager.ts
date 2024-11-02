@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { createGroup, getGroupData, requestJoinGroup } from '../DatabaseManager'
+import * as Database from '../DatabaseManager'
 const router = Router();
 
 router.post('/createGroup', async (req: Request, res: Response) => {
@@ -12,7 +12,7 @@ router.post('/createGroup', async (req: Request, res: Response) => {
 
     try {
 
-        const result = createGroup(name, avatar, description, playerToken, is_private);
+        const result = Database.createGroup(name, avatar, description, playerToken, is_private);
         return res.status(200).json({ message: 'Group created successfully', id: (await result).id });
 
     } catch (error) {
@@ -30,7 +30,7 @@ router.post('/getGroupInfo', async (req: Request, res: Response) => {
         if (!groupID) {
             return res.status(400).json({ message: 'Missing required fields: groupID' });
         }
-        const result = await getGroupData(groupID);
+        const result = await Database.getGroupData(groupID);
         return res.status(200).json(result);
 
     } catch (error) {
@@ -52,34 +52,73 @@ router.post('/requestJoinGroup', async (req: Request, res: Response) => {
         if (!groupID || !playerToken) {
             return res.status(400).json({ success: false, message: 'Missing required fields: groupID, playerToken' });
         }
-        const result = await requestJoinGroup(playerToken, groupID);
+        const result = await Database.requestJoinGroup(playerToken, groupID);
         return res.status(200).json(result);
 
     } catch (error) {
 
-        console.error('Error Get Group Info:', error);
-        res.status(500).json({ success: false, message: 'Error Get Group Info:', error });
+        console.error('Error request Join Group:', error);
+        res.status(500).json({ success: false, message: 'Error request Join Group:', error });
     }
 
 });
 
 router.post('/acceptRequest', async (req: Request, res: Response) => {
 
+    try {
+        const { userToken, groupID } = req.body;
+        if (!groupID || !userToken) {
+            return res.status(400).json({ success: false, message: 'Missing required fields: groupID, userToken' });
+        }
+
+        const result = await Database.acceptJoinGroup(userToken, groupID);
+        return res.status(200).json(result);
+
+    } catch (error) {
+
+        console.error('Error accept Request:', error);
+        res.status(500).json({ success: false, message: 'Error accept Request:', error });
+    }
+
 });
 
 router.post('/rejectRequest', async (req: Request, res: Response) => {
 
+    try {
+        const { userToken, groupID } = req.body;
+        if (!groupID || !userToken) {
+            return res.status(400).json({ success: false, message: 'Missing required fields: groupID, userToken' });
+        }
+
+        const result = await Database.rejectJoinGroup(userToken, groupID);
+        return res.status(200).json(result);
+
+    } catch (error) {
+
+        console.error('Error reject Request:', error);
+        res.status(500).json({ success: false, message: 'Error reject Request:', error });
+    }
 });
 
 router.post('/removeMember', async (req: Request, res: Response) => {
 
+    try {
+        const { userToken, groupID } = req.body;
+        if (!groupID || !userToken) {
+            return res.status(400).json({ success: false, message: 'Missing required fields: groupID, userToken' });
+        }
+
+        const result = await Database.removeMemberGroup(userToken, groupID);
+        return res.status(200).json(result);
+
+    } catch (error) {
+
+        console.error('Error remove Member:', error);
+        res.status(500).json({ success: false, message: 'Error remove Member:', error });
+    }
 });
 
 router.post('/inviteMember', async (req: Request, res: Response) => {
-
-});
-
-router.post('/removeMember', async (req: Request, res: Response) => {
 
 });
 
