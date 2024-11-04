@@ -16,6 +16,7 @@ exports.requestJoinGroup = requestJoinGroup;
 exports.acceptJoinGroup = acceptJoinGroup;
 exports.rejectJoinGroup = rejectJoinGroup;
 exports.removeMemberGroup = removeMemberGroup;
+exports.getPlayerGroups = getPlayerGroups;
 const promise_1 = __importDefault(require("mysql2/promise"));
 const pool = promise_1.default.createPool({
     host: 'localhost',
@@ -90,7 +91,39 @@ function acceptJoinGroup(playerToken, groupID) {
             groupMember.push(playerToken);
             yield pool.query('UPDATE `group` SET members = ? WHERE id = ?', [JSON.stringify(groupMember), groupID]);
             const deleteRequest = yield rejectJoinGroup(playerToken, groupID);
-            return { success: true, message: "player joined group" };
+            try {
+                const [player] = yield pool.query('SELECT * FROM players WHERE playerToken = ?', [playerToken]);
+                if (player.length === 0) {
+                    return { success: false, message: "Player not found" };
+                }
+                let groupMember = [];
+                const currentRequests = player[0].groups || '[]';
+                try {
+                    if (Array.isArray(currentRequests)) {
+                        groupMember = currentRequests;
+                    }
+                    else if (currentRequests === '{}' || currentRequests === '') {
+                        groupMember = [];
+                    }
+                    else {
+                        groupMember = JSON.parse(currentRequests);
+                    }
+                    if (!Array.isArray(groupMember)) {
+                        throw new Error('Group Member is not an array');
+                    }
+                }
+                catch (parseError) {
+                    console.error('Error parsing player groups:', parseError, "Current groups:", currentRequests);
+                    return { success: false, message: "Error parsing player groups" };
+                }
+                groupMember.push(groupID);
+                yield pool.query('UPDATE players SET `groups` = ? WHERE playerToken = ?', [JSON.stringify(groupMember), playerToken]);
+                return { success: true, message: "Group updated for player successfully" };
+            }
+            catch (error) {
+                console.error('Error in updating group for player:', error);
+                return { success: false, message: "Error in updating group for player" };
+            }
         }
         catch (error) {
             console.error('Error in accept join group Request:', error);
@@ -171,6 +204,37 @@ function removeMemberGroup(playerToken, groupID) {
         catch (error) {
             console.error('Error in remove member from group request:', error);
             return { success: false, message: "Error in remove member from group request" };
+        }
+    });
+}
+function getPlayerGroups(playerToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const [playerResult] = yield pool.query('SELECT `groups` FROM players WHERE playerToken = ?', [playerToken]);
+            if (playerResult.length === 0) {
+                return { success: false, message: "User not found" };
+            }
+            let groupIDs = [];
+            const currentGroups = playerResult[0].groups || '[]';
+            try {
+                groupIDs = Array.isArray(currentGroups) ? currentGroups : JSON.parse(currentGroups);
+                if (!Array.isArray(groupIDs)) {
+                    throw new Error('Groups data is not an array');
+                }
+            }
+            catch (parseError) {
+                console.error('Error parsing groups:', parseError, "Current groups:", currentGroups);
+                return { success: false, message: "Error parsing player groups" };
+            }
+            if (groupIDs.length === 0) {
+                return { success: true, groups: [] };
+            }
+            const [groupsResult] = yield pool.query(`SELECT id, name, avatar, description, leader_id, is_private, members FROM \`group\` WHERE id IN (${groupIDs.map(() => '?').join(', ')})`, groupIDs);
+            return { success: true, groups: groupsResult };
+        }
+        catch (error) {
+            console.error('Error in fetching player groups:', error);
+            return { success: false, message: "Error fetching player groups" };
         }
     });
 }

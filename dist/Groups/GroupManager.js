@@ -36,12 +36,12 @@ const express_1 = require("express");
 const Database = __importStar(require("../DatabaseManager"));
 const router = (0, express_1.Router)();
 router.post('/createGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, avatar, description, playerToken, is_private } = req.body;
+    const { name, avatar, description, playerToken, is_private, members } = req.body;
     if (!name || !description || !playerToken) {
         return res.status(400).json({ success: false, message: 'Missing required fields: name, avatar, description, playerToken, is_private' });
     }
     try {
-        const result = Database.createGroup(name, avatar, description, playerToken, is_private);
+        const result = Database.createGroup(name, avatar, description, playerToken, is_private, members);
         return res.status(200).json({ success: true, message: 'Group created successfully', id: (yield result).id });
     }
     catch (error) {
@@ -62,8 +62,6 @@ router.post('/getGroupInfo', (req, res) => __awaiter(void 0, void 0, void 0, fun
         console.error('Error Get Group Info:', error);
         res.status(500).json({ message: 'Error Get Group Info:', error });
     }
-}));
-router.post('/recommendedGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.post('/requestJoinGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -124,5 +122,19 @@ router.post('/removeMember', (req, res) => __awaiter(void 0, void 0, void 0, fun
 router.post('/inviteMember', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.post('/unlockInviteMember', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+}));
+router.post('/getPlayerGroups', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { playerToken } = req.body;
+        if (!playerToken) {
+            return res.status(400).json({ success: false, message: 'Missing required fields: groupID, userToken' });
+        }
+        const result = yield Database.getPlayerGroups(playerToken);
+        return res.status(200).json(result);
+    }
+    catch (error) {
+        console.error('Error get Player Groups:', error);
+        res.status(500).json({ success: false, message: 'Error get Player Groups:', error });
+    }
 }));
 exports.default = router;

@@ -8,15 +8,15 @@ const pool = mysql.createPool({
     database: 'game_db',
 });
 
-export async function createGroup(name: string, avatar: string, description: string, leader_id: string, is_private: boolean) {
+export async function createGroup(name: string, avatar: string, description: string, leader_id: string, is_private: boolean, members: string) {
     try {
-        const id = generateToken(); 
+        const id = generateToken();
 
         const query = `
-            INSERT INTO \`group\` (id, name, avatar, description, leader_id, is_private)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO \`group\` (id, name, avatar, description, leader_id, is_private, members)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
-        await pool.query(query, [id, name, avatar, description, leader_id, is_private]);
+        await pool.query(query, [id, name, avatar, description, leader_id, is_private, members]);
 
         const [result]: [RowDataPacket[], any] = await pool.query('SELECT `groups` FROM players WHERE playerToken = ?', [leader_id]);
 

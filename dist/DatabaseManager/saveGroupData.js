@@ -20,16 +20,16 @@ const pool = promise_1.default.createPool({
     password: 'Alireza1995!',
     database: 'game_db',
 });
-function createGroup(name, avatar, description, leader_id, is_private) {
+function createGroup(name, avatar, description, leader_id, is_private, members) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         try {
             const id = generateToken();
             const query = `
-            INSERT INTO \`group\` (id, name, avatar, description, leader_id, is_private)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO \`group\` (id, name, avatar, description, leader_id, is_private, members)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
-            yield pool.query(query, [id, name, avatar, description, leader_id, is_private]);
+            yield pool.query(query, [id, name, avatar, description, leader_id, is_private, members]);
             const [result] = yield pool.query('SELECT `groups` FROM players WHERE playerToken = ?', [leader_id]);
             let groups = [];
             const currentGroups = ((_a = result[0]) === null || _a === void 0 ? void 0 : _a.groups) || '[]';

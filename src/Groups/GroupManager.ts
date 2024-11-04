@@ -4,7 +4,7 @@ const router = Router();
 
 router.post('/createGroup', async (req: Request, res: Response) => {
 
-    const { name, avatar, description, playerToken, is_private } = req.body;
+    const { name, avatar, description, playerToken, is_private, members } = req.body;
 
     if (!name || !description || !playerToken) {
         return res.status(400).json({ success: false, message: 'Missing required fields: name, avatar, description, playerToken, is_private' });
@@ -12,7 +12,7 @@ router.post('/createGroup', async (req: Request, res: Response) => {
 
     try {
 
-        const result = Database.createGroup(name, avatar, description, playerToken, is_private);
+        const result = Database.createGroup(name, avatar, description, playerToken, is_private, members);
         return res.status(200).json({ success: true, message: 'Group created successfully', id: (await result).id });
 
     } catch (error) {
@@ -36,10 +36,6 @@ router.post('/getGroupInfo', async (req: Request, res: Response) => {
         console.error('Error Get Group Info:', error);
         res.status(500).json({ message: 'Error Get Group Info:', error });
     }
-
-});
-
-router.post('/recommendedGroup', async (req: Request, res: Response) => {
 
 });
 
@@ -121,6 +117,25 @@ router.post('/inviteMember', async (req: Request, res: Response) => {
 });
 
 router.post('/unlockInviteMember', async (req: Request, res: Response) => {
+
+});
+
+router.post('/getPlayerGroups', async (req: Request, res: Response) => {
+
+try {
+        const { playerToken } = req.body;
+        if (!playerToken) {
+            return res.status(400).json({ success: false, message: 'Missing required fields: groupID, userToken' });
+        }
+
+        const result = await Database.getPlayerGroups(playerToken);
+        return res.status(200).json(result);
+
+    } catch (error) {
+
+        console.error('Error get Player Groups:', error);
+        res.status(500).json({ success: false, message: 'Error get Player Groups:', error });
+    }
 
 });
 
