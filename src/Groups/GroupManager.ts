@@ -6,8 +6,8 @@ router.post('/createGroup', async (req: Request, res: Response) => {
 
     const { name, avatar, description, playerToken, is_private, members } = req.body;
 
-    if (!name || !description || !playerToken) {
-        return res.status(400).json({ success: false, message: 'Missing required fields: name, avatar, description, playerToken, is_private' });
+    if (!name || !playerToken) {
+        return res.status(400).json({ success: false, message: 'Missing required fields: name, playerToken' });
     }
 
     try {

@@ -37,8 +37,8 @@ const Database = __importStar(require("../DatabaseManager"));
 const router = (0, express_1.Router)();
 router.post('/createGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, avatar, description, playerToken, is_private, members } = req.body;
-    if (!name || !description || !playerToken) {
-        return res.status(400).json({ success: false, message: 'Missing required fields: name, avatar, description, playerToken, is_private' });
+    if (!name || !playerToken) {
+        return res.status(400).json({ success: false, message: 'Missing required fields: name, playerToken' });
     }
     try {
         const result = Database.createGroup(name, avatar, description, playerToken, is_private, members);
